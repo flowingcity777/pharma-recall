@@ -31,16 +31,14 @@ function displayDrug() {
 }
 
 function showFront() {
-    cardFront.style.display = "block";
-    cardBack.style.display = "none";
+    flashcard.classList.remove("is-flipped");
 
     isCardFlipped = false;
     flipButton.textContent = "Flip Card";
 }
 
 function showBack() {
-    cardFront.style.display = "none";
-    cardBack.style.display = "block";
+    flashcard.classList.add("is-flipped");
 
     isCardFlipped = true;
     flipButton.textContent = "Show Drug";
