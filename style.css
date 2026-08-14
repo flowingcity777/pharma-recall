@@ -149,13 +149,14 @@ footer {
 }
 
 @media (max-width: 600px) {
-    .flashcard {
+
+    .flashcard,
+    .card-face {
         min-height: 500px;
-        padding: 1.5rem;
     }
 
-    .card-front {
-        padding: 4rem 1rem;
+    .card-face {
+        padding: 1.5rem;
     }
 
     .card-front h2 {
