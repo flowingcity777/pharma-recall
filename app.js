@@ -1,5 +1,6 @@
 let currentCardIndex = 0;
 let isCardFlipped = false;
+let currentMode = "study";
 
 const drugName = document.getElementById("drug-name");
 const brandName = document.getElementById("brand-name");
@@ -13,6 +14,9 @@ const flashcard = document.getElementById("flashcard");
 const previousButton = document.getElementById("previous-btn");
 const nextButton = document.getElementById("next-btn");
 const flipButton = document.getElementById("flip-btn");
+
+const studyModeButton = document.getElementById("study-mode-btn");
+const practiceModeButton = document.getElementById("practice-mode-btn");
 
 function displayDrug() {
     const drug = drugs[currentCardIndex];
@@ -52,6 +56,24 @@ function flipCard() {
     }
 }
 
+function setStudyMode() {
+    currentMode = "study";
+
+    studyModeButton.classList.add("active");
+    practiceModeButton.classList.remove("active");
+
+    displayDrug();
+}
+
+function setPracticeMode() {
+    currentMode = "practice";
+
+    practiceModeButton.classList.add("active");
+    studyModeButton.classList.remove("active");
+
+    displayDrug();
+}
+
 function showNextCard() {
     currentCardIndex++;
 
@@ -76,5 +98,8 @@ flipButton.addEventListener("click", flipCard);
 flashcard.addEventListener("click", flipCard);
 nextButton.addEventListener("click", showNextCard);
 previousButton.addEventListener("click", showPreviousCard);
+
+studyModeButton.addEventListener("click", setStudyMode);
+practiceModeButton.addEventListener("click", setPracticeMode);
 
 displayDrug();
