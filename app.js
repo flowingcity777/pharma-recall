@@ -8,8 +8,7 @@ const clinicalPharmacology = document.getElementById("clinical-pharmacology");
 const foodInteractions = document.getElementById("food-interactions");
 const cardCounter = document.getElementById("card-counter");
 
-const cardFront = document.querySelector(".card-front");
-const cardBack = document.querySelector(".card-back");
+const flashcard = document.getElementById("flashcard");
 
 const previousButton = document.getElementById("previous-btn");
 const nextButton = document.getElementById("next-btn");
