@@ -73,6 +73,7 @@ function showPreviousCard() {
 }
 
 flipButton.addEventListener("click", flipCard);
+flashcard.addEventListener("click", flipCard);
 nextButton.addEventListener("click", showNextCard);
 previousButton.addEventListener("click", showPreviousCard);
 
