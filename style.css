@@ -52,17 +52,32 @@ main {
 }
 
 .flashcard {
+    position: relative;
+    width: 100%;
+    min-height: 430px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    cursor: pointer;
+}
+
+.flashcard.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    min-height: 430px;
+    padding: 2rem;
+
     background-color: #ffffff;
     border: 1px solid #d9dee3;
     border-radius: 12px;
-    min-height: 430px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
 
-.card-front {
-    text-align: center;
-    padding: 5rem 1rem;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .card-label {
@@ -72,18 +87,27 @@ main {
     margin-bottom: 1rem;
 }
 
-.card-front h2 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-}
-
 #brand-name {
     color: #66737f;
     font-style: italic;
 }
 
+.card-front {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card-front h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
 .card-back {
-    display: none;
+    transform: rotateY(180deg);
+    overflow-y: auto;
 }
 
 .card-back section {
