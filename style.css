@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #1f2933;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid #d9dee3;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+header p {
+    color: #5f6c78;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.deck-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.deck-header h2 {
+    margin-bottom: 0.25rem;
+}
+
+#card-counter {
+    color: #66737f;
+    font-size: 0.95rem;
+}
+
+.flashcard-container {
+    perspective: 1000px;
+}
+
+.flashcard {
+    background-color: #ffffff;
+    border: 1px solid #d9dee3;
+    border-radius: 12px;
+    min-height: 430px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-front {
+    text-align: center;
+    padding: 5rem 1rem;
+}
+
+.card-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: #66737f;
+    margin-bottom: 1rem;
+}
+
+.card-front h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+#brand-name {
+    color: #66737f;
+    font-style: italic;
+}
+
+.card-back {
+    display: none;
+}
+
+.card-back section {
+    margin-bottom: 1.5rem;
+}
+
+.card-back h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.card-controls,
+.study-controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}
+
+button {
+    border: 1px solid #b8c0c8;
+    border-radius: 6px;
+    background-color: #ffffff;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #eef1f4;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #66737f;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+    .flashcard {
+        min-height: 500px;
+        padding: 1.5rem;
+    }
+
+    .card-front {
+        padding: 4rem 1rem;
+    }
+
+    .card-front h2 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        width: 100%;
+    }
+}
