@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaRecall</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>PharmaRecall</h1>
+        <p>Interactive Pharmacology Study</p>
+    </header>
+
+    <main>
+        <section class="deck-header">
+            <h2>Pain &amp; Migraine</h2>
+            <p id="card-counter">Drug 1 of 14</p>
+        </section>
+
+        <section class="flashcard-container">
+            <article class="flashcard">
+
+                <div class="card-front">
+                    <p class="card-label">DRUG</p>
+                    <h2 id="drug-name">Acetaminophen</h2>
+                    <p id="brand-name">Tylenol</p>
+                </div>
+
+                <div class="card-back">
+
+                    <section>
+                        <h3>Notable Side Effects</h3>
+                        <p id="side-effects"></p>
+                    </section>
+
+                    <section>
+                        <h3>Clinical Pharmacology</h3>
+                        <p id="clinical-pharmacology"></p>
+                    </section>
+
+                    <section>
+                        <h3>Food–Drug Interactions</h3>
+                        <p id="food-interactions"></p>
+                    </section>
+
+                </div>
+
+            </article>
+        </section>
+
+        <nav class="card-controls">
+            <button id="previous-btn">← Previous</button>
+            <button id="flip-btn">Flip Card</button>
+            <button id="next-btn">Next →</button>
+        </nav>
+
+        <section class="study-controls">
+            <button id="study-mode-btn">Study Mode</button>
+            <button id="practice-mode-btn">Practice Mode</button>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>PharmaRecall — Pharmacology Study Tool</p>
+    </footer>
+
+    <script src="data/drugs.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
