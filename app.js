@@ -11,6 +11,13 @@ const cardCounter = document.getElementById("card-counter");
 
 const flashcard = document.getElementById("flashcard");
 
+const practicePanel = document.getElementById("practice-panel");
+const practiceDrugName = document.getElementById("practice-drug-name");
+const practiceAnswer = document.getElementById("practice-answer");
+const checkAnswerButton = document.getElementById("check-answer-btn");
+const revealAnswerButton = document.getElementById("reveal-answer-btn");
+const practiceFeedback = document.getElementById("practice-feedback");
+
 const previousButton = document.getElementById("previous-btn");
 const nextButton = document.getElementById("next-btn");
 const flipButton = document.getElementById("flip-btn");
@@ -92,6 +99,15 @@ function showPreviousCard() {
     }
 
     displayDrug();
+}
+
+function displayPracticeQuestion() {
+    const drug = drugs[currentCardIndex];
+
+    practiceDrugName.textContent = drug.genericName;
+
+    practiceAnswer.value = "";
+    practiceFeedback.textContent = "";
 }
 
 flipButton.addEventListener("click", flipCard);
