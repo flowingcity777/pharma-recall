@@ -399,6 +399,9 @@ checkAnswerButton.addEventListener("click", checkPracticeAnswer);
 revealAnswerButton.addEventListener("click", revealPracticeAnswer);
 
 tryAgainButton.addEventListener("click", tryPracticeAgain);
-nextQuestionButton.addEventListener("click", nextPracticeQuestion);
+nextQuestionButton.addEventListener("click", () => {
+    console.log("Next Question button clicked");
+    nextPracticeQuestion();
+});
 
 displayDrug();
