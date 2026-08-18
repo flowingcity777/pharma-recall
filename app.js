@@ -81,6 +81,9 @@ function displayPracticeQuestion() {
 
     practiceDrugName.textContent = drug.genericName;
 
+    cardCounter.textContent =
+        `Drug ${currentCardIndex + 1} of ${drugs.length}`;
+
     practiceAnswer.value = "";
     practiceFeedback.textContent = "";
 
