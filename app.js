@@ -1,3 +1,13 @@
+// ========================================
+// PharmaRecall
+// Main Application Logic
+// ========================================
+
+
+// ========================================
+// 1. Application State
+// ========================================
+
 let currentCardIndex = 0;
 let isCardFlipped = false;
 let currentMode = "study";
@@ -9,34 +19,88 @@ let currentAttemptResult = null;
 let currentAttemptScore = null;
 let attemptRecorded = false;
 
+
+// ========================================
+// 2. DOM Elements
+// ========================================
+
+// Flashcard content
 const drugName = document.getElementById("drug-name");
 const brandName = document.getElementById("brand-name");
 const sideEffects = document.getElementById("side-effects");
-const clinicalPharmacology = document.getElementById("clinical-pharmacology");
-const foodInteractions = document.getElementById("food-interactions");
-const cardCounter = document.getElementById("card-counter");
+const clinicalPharmacology =
+    document.getElementById("clinical-pharmacology");
+const foodInteractions =
+    document.getElementById("food-interactions");
 
-const flashcard = document.getElementById("flashcard");
+const cardCounter =
+    document.getElementById("card-counter");
 
-const practicePanel = document.getElementById("practice-panel");
-const practiceDrugName = document.getElementById("practice-drug-name");
-const practiceAnswer = document.getElementById("practice-answer");
-const checkAnswerButton = document.getElementById("check-answer-btn");
-const revealAnswerButton = document.getElementById("reveal-answer-btn");
-const practiceFeedback = document.getElementById("practice-feedback");
+const flashcard =
+    document.getElementById("flashcard");
 
-const previousButton = document.getElementById("previous-btn");
-const nextButton = document.getElementById("next-btn");
-const flipButton = document.getElementById("flip-btn");
 
-const studyModeButton = document.getElementById("study-mode-btn");
-const practiceModeButton = document.getElementById("practice-mode-btn");
+// Practice mode
+const practicePanel =
+    document.getElementById("practice-panel");
 
-const sessionAttemptsDisplay = document.getElementById("session-attempts");
-const sessionScoreDisplay = document.getElementById("session-score");
-const practiceNavigation = document.getElementById("practice-navigation");
-const tryAgainButton = document.getElementById("try-again-btn");
-const nextQuestionButton = document.getElementById("next-question-btn");
+const practiceDrugName =
+    document.getElementById("practice-drug-name");
+
+const practiceAnswer =
+    document.getElementById("practice-answer");
+
+const practiceFeedback =
+    document.getElementById("practice-feedback");
+
+const checkAnswerButton =
+    document.getElementById("check-answer-btn");
+
+const revealAnswerButton =
+    document.getElementById("reveal-answer-btn");
+
+
+// Flashcard navigation
+const previousButton =
+    document.getElementById("previous-btn");
+
+const nextButton =
+    document.getElementById("next-btn");
+
+const flipButton =
+    document.getElementById("flip-btn");
+
+
+// Mode controls
+const studyModeButton =
+    document.getElementById("study-mode-btn");
+
+const practiceModeButton =
+    document.getElementById("practice-mode-btn");
+
+
+// Score display
+const sessionAttemptsDisplay =
+    document.getElementById("session-attempts");
+
+const sessionScoreDisplay =
+    document.getElementById("session-score");
+
+
+// Practice navigation
+const practiceNavigation =
+    document.getElementById("practice-navigation");
+
+const tryAgainButton =
+    document.getElementById("try-again-btn");
+
+const nextQuestionButton =
+    document.getElementById("next-question-btn");
+
+
+// ========================================
+// 3. Study Mode Display
+// ========================================
 
 function displayDrug() {
     const drug = drugs[currentCardIndex];
@@ -44,15 +108,25 @@ function displayDrug() {
     drugName.textContent = drug.genericName;
     brandName.textContent = drug.brandNames.join(" / ");
 
-    sideEffects.textContent = drug.sideEffects.join(" • ");
-    clinicalPharmacology.textContent = drug.clinicalPharmacology;
-    foodInteractions.textContent = drug.foodInteractions;
+    sideEffects.textContent =
+        drug.sideEffects.join(" • ");
+
+    clinicalPharmacology.textContent =
+        drug.clinicalPharmacology;
+
+    foodInteractions.textContent =
+        drug.foodInteractions;
 
     cardCounter.textContent =
         `Drug ${currentCardIndex + 1} of ${drugs.length}`;
 
     showFront();
 }
+
+
+// ========================================
+// 4. Flashcard Functions
+// ========================================
 
 function showFront() {
     flashcard.classList.remove("is-flipped");
@@ -61,12 +135,14 @@ function showFront() {
     flipButton.textContent = "Flip Card";
 }
 
+
 function showBack() {
     flashcard.classList.add("is-flipped");
 
     isCardFlipped = true;
     flipButton.textContent = "Show Drug";
 }
+
 
 function flipCard() {
     if (isCardFlipped) {
@@ -76,10 +152,16 @@ function flipCard() {
     }
 }
 
+
+// ========================================
+// 5. Practice Mode Display
+// ========================================
+
 function displayPracticeQuestion() {
     const drug = drugs[currentCardIndex];
 
-    practiceDrugName.textContent = drug.genericName;
+    practiceDrugName.textContent =
+        drug.genericName;
 
     cardCounter.textContent =
         `Drug ${currentCardIndex + 1} of ${drugs.length}`;
@@ -94,6 +176,11 @@ function displayPracticeQuestion() {
     practiceNavigation.style.display = "none";
 }
 
+
+// ========================================
+// 6. Answer Normalization
+// ========================================
+
 function normalizeAnswer(answer) {
     return answer
         .toLowerCase()
@@ -101,35 +188,70 @@ function normalizeAnswer(answer) {
         .replace(/\s+/g, " ");
 }
 
+
+// ========================================
+// 7. String Similarity
+// ========================================
+
 function calculateSimilarity(first, second) {
-    const longer = first.length >= second.length ? first : second;
-    const shorter = first.length >= second.length ? second : first;
+    const longer =
+        first.length >= second.length
+            ? first
+            : second;
+
+    const shorter =
+        first.length >= second.length
+            ? second
+            : first;
 
     if (longer.length === 0) {
         return 1;
     }
 
-    const distance = levenshteinDistance(longer, shorter);
+    const distance =
+        levenshteinDistance(longer, shorter);
 
-    return (longer.length - distance) / longer.length;
+    return (
+        longer.length - distance
+    ) / longer.length;
 }
+
 
 function levenshteinDistance(first, second) {
     const matrix = [];
 
-    for (let i = 0; i <= second.length; i++) {
+    for (
+        let i = 0;
+        i <= second.length;
+        i++
+    ) {
         matrix[i] = [i];
     }
 
-    for (let j = 0; j <= first.length; j++) {
+    for (
+        let j = 0;
+        j <= first.length;
+        j++
+    ) {
         matrix[0][j] = j;
     }
 
-    for (let i = 1; i <= second.length; i++) {
-        for (let j = 1; j <= first.length; j++) {
-
-            if (second[i - 1] === first[j - 1]) {
-                matrix[i][j] = matrix[i - 1][j - 1];
+    for (
+        let i = 1;
+        i <= second.length;
+        i++
+    ) {
+        for (
+            let j = 1;
+            j <= first.length;
+            j++
+        ) {
+            if (
+                second[i - 1] ===
+                first[j - 1]
+            ) {
+                matrix[i][j] =
+                    matrix[i - 1][j - 1];
             } else {
                 matrix[i][j] = Math.min(
                     matrix[i - 1][j] + 1,
@@ -143,134 +265,191 @@ function levenshteinDistance(first, second) {
     return matrix[second.length][first.length];
 }
 
-function normalizeAnswer(answer) {
-    return answer
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, " ");
+
+// ========================================
+// 8. Practice Feedback / Scoring
+// ========================================
+
+function setAttemptResult(
+    result,
+    score,
+    message
+) {
+    currentAttemptResult = result;
+    currentAttemptScore = score;
+
+    practiceFeedback.textContent = message;
+
+    practiceNavigation.style.display = "flex";
 }
 
-function calculateSimilarity(first, second) {
-    const longer = first.length >= second.length ? first : second;
-    const shorter = first.length >= second.length ? second : first;
 
-    if (longer.length === 0) {
-        return 1;
-    }
-
-    const distance = levenshteinDistance(longer, shorter);
-
-    return (longer.length - distance) / longer.length;
-}
-
-function levenshteinDistance(first, second) {
-    const matrix = [];
-
-    for (let i = 0; i <= second.length; i++) {
-        matrix[i] = [i];
-    }
-
-    for (let j = 0; j <= first.length; j++) {
-        matrix[0][j] = j;
-    }
-
-    for (let i = 1; i <= second.length; i++) {
-        for (let j = 1; j <= first.length; j++) {
-
-            if (second[i - 1] === first[j - 1]) {
-                matrix[i][j] = matrix[i - 1][j - 1];
-            } else {
-                matrix[i][j] = Math.min(
-                    matrix[i - 1][j] + 1,
-                    matrix[i][j - 1] + 1,
-                    matrix[i - 1][j - 1] + 1
-                );
-            }
-        }
-    }
-
-    return matrix[second.length][first.length];
-}
+// ========================================
+// 9. Check Practice Answer
+// ========================================
 
 function checkPracticeAnswer() {
-    console.log("checkPracticeAnswer started");
-    
     const drug = drugs[currentCardIndex];
 
-    const userAnswers = normalizeAnswer(practiceAnswer.value)
-        .split(",")
-        .map(answer => answer.trim())
-        .filter(answer => answer !== "");
+    const userAnswers =
+        practiceAnswer.value
+            .split(",")
+            .map(answer =>
+                normalizeAnswer(answer)
+            )
+            .filter(answer =>
+                answer !== ""
+            );
 
-    const correctAnswers = drug.sideEffects.map(effect =>
-        normalizeAnswer(effect)
-    );
+    const correctAnswers =
+        drug.sideEffects.map(effect =>
+            normalizeAnswer(effect)
+        );
+
+    const matchedCorrectAnswers =
+        new Set();
 
     let exactMatches = 0;
     let almostMatches = 0;
 
+
     userAnswers.forEach(userAnswer => {
 
-        if (correctAnswers.includes(userAnswer)) {
+        // -------------------------------
+        // First: look for an exact match
+        // -------------------------------
+
+        const exactIndex =
+            correctAnswers.findIndex(
+                (
+                    correctAnswer,
+                    index
+                ) =>
+                    correctAnswer ===
+                        userAnswer &&
+                    !matchedCorrectAnswers.has(
+                        index
+                    )
+            );
+
+        if (exactIndex !== -1) {
             exactMatches++;
+
+            matchedCorrectAnswers.add(
+                exactIndex
+            );
+
             return;
         }
 
-        const isAlmost = correctAnswers.some(correctAnswer => {
-            const similarity = calculateSimilarity(
-                userAnswer,
-                correctAnswer
-            );
 
-            console.log(
-                userAnswer,
+        // -------------------------------
+        // Otherwise find closest match
+        // -------------------------------
+
+        let bestSimilarity = 0;
+        let bestMatchIndex = -1;
+
+        correctAnswers.forEach(
+            (
                 correctAnswer,
-                similarity
-            );
+                index
+            ) => {
 
-            return similarity >= 0.78;
-        });
+                if (
+                    matchedCorrectAnswers.has(
+                        index
+                    )
+                ) {
+                    return;
+                }
 
-        if (isAlmost) {
+                const similarity =
+                    calculateSimilarity(
+                        userAnswer,
+                        correctAnswer
+                    );
+
+                if (
+                    similarity >
+                    bestSimilarity
+                ) {
+                    bestSimilarity =
+                        similarity;
+
+                    bestMatchIndex =
+                        index;
+                }
+            }
+        );
+
+
+        // Conservative typo tolerance
+        if (
+            bestSimilarity >= 0.78 &&
+            bestMatchIndex !== -1
+        ) {
             almostMatches++;
+
+            matchedCorrectAnswers.add(
+                bestMatchIndex
+            );
         }
     });
 
+
+    const totalMatches =
+        exactMatches + almostMatches;
+
+
+    // -------------------------------
+    // Determine result
+    // -------------------------------
+
     if (
-    exactMatches === correctAnswers.length &&
-    almostMatches === 0
-) {
-    setAttemptResult(
-        "correct",
-        1,
-        "Correct!"
-    );
+        exactMatches ===
+            correctAnswers.length &&
+        almostMatches === 0
+    ) {
+        setAttemptResult(
+            "correct",
+            1,
+            "Correct!"
+        );
 
-} else if (
-    totalMatches === correctAnswers.length &&
-    almostMatches > 0
-) {
-    setAttemptResult(
-        "almost",
-        0.75,
-        "Almost — check your spelling."
-    );
+    } else if (
+        totalMatches ===
+            correctAnswers.length &&
+        almostMatches > 0
+    ) {
+        setAttemptResult(
+            "almost",
+            0.75,
+            "Almost — check your spelling."
+        );
 
-} else if (totalMatches > 0) {
-    setAttemptResult(
-        "partial",
-        0.5,
-        `Partially correct — you recalled ${totalMatches} of ${correctAnswers.length} key points.`
-    );
+    } else if (
+        totalMatches > 0
+    ) {
+        setAttemptResult(
+            "partial",
+            0.5,
+            `Partially correct — you recalled ${totalMatches} of ${correctAnswers.length} key points.`
+        );
 
-} else {
-    setAttemptResult(
-        "incorrect",
-        0,
-        "Not quite. Try again or reveal the answer."
-    );
+    } else {
+        setAttemptResult(
+            "incorrect",
+            0,
+            "Not quite. Try again or reveal the answer."
+        );
+    }
 }
-}
+
+
+// ========================================
+// 10. Reveal Answer
+// ========================================
 
 function revealPracticeAnswer() {
     const drug = drugs[currentCardIndex];
@@ -282,6 +461,11 @@ function revealPracticeAnswer() {
     );
 }
 
+
+// ========================================
+// 11. Try Again
+// ========================================
+
 function tryPracticeAgain() {
     practiceAnswer.value = "";
     practiceFeedback.textContent = "";
@@ -289,10 +473,16 @@ function tryPracticeAgain() {
     currentAttemptResult = null;
     currentAttemptScore = null;
 
-    practiceNavigation.style.display = "none";
+    practiceNavigation.style.display =
+        "none";
 
     practiceAnswer.focus();
 }
+
+
+// ========================================
+// 12. Score Recording
+// ========================================
 
 function recordCurrentAttempt() {
     if (
@@ -303,133 +493,206 @@ function recordCurrentAttempt() {
     }
 
     sessionAttempts++;
-    sessionScore += currentAttemptScore;
+    sessionScore +=
+        currentAttemptScore;
 
     attemptRecorded = true;
 
     updateScoreDisplay();
 }
 
+
 function updateScoreDisplay() {
-    sessionAttemptsDisplay.textContent = sessionAttempts;
+    sessionAttemptsDisplay.textContent =
+        sessionAttempts;
 
     sessionScoreDisplay.textContent =
-        sessionScore.toFixed(2).replace(/\.00$/, "");
+        sessionScore
+            .toFixed(2)
+            .replace(/\.00$/, "");
 }
 
+
+// ========================================
+// 13. Next Practice Question
+// ========================================
+
 function nextPracticeQuestion() {
-    console.log("nextPracticeQuestion started");
 
-    console.log("Before recording:", {
-        currentCardIndex,
-        currentAttemptScore,
-        sessionAttempts,
-        sessionScore
-    });
+    // If user moves on without checking,
+    // count it as a skipped question.
+    if (
+        currentAttemptScore === null
+    ) {
+        currentAttemptResult =
+            "skipped";
 
-    if (currentAttemptScore === null) {
-        currentAttemptResult = "skipped";
         currentAttemptScore = 0;
     }
 
     recordCurrentAttempt();
 
-    console.log("After recording:", {
-        currentCardIndex,
-        currentAttemptScore,
-        sessionAttempts,
-        sessionScore
-    });
-
     currentCardIndex++;
 
-    if (currentCardIndex >= drugs.length) {
+    if (
+        currentCardIndex >=
+        drugs.length
+    ) {
         currentCardIndex = 0;
     }
 
-    console.log("New card index:", currentCardIndex);
-
     displayPracticeQuestion();
-
-    console.log("Next question displayed");
 }
 
-function setAttemptResult(result, score, message) {
-    currentAttemptResult = result;
-    currentAttemptScore = score;
 
-    practiceFeedback.textContent = message;
-    practiceNavigation.style.display = "flex";
-}
+// ========================================
+// 14. General Navigation
+// ========================================
 
 function showNextCard() {
     currentCardIndex++;
 
-    if (currentCardIndex >= drugs.length) {
+    if (
+        currentCardIndex >=
+        drugs.length
+    ) {
         currentCardIndex = 0;
     }
 
-    if (currentMode === "practice") {
+    if (
+        currentMode === "practice"
+    ) {
         displayPracticeQuestion();
     } else {
         displayDrug();
     }
 }
+
 
 function showPreviousCard() {
     currentCardIndex--;
 
-    if (currentCardIndex < 0) {
-        currentCardIndex = drugs.length - 1;
+    if (
+        currentCardIndex < 0
+    ) {
+        currentCardIndex =
+            drugs.length - 1;
     }
 
-    if (currentMode === "practice") {
+    if (
+        currentMode === "practice"
+    ) {
         displayPracticeQuestion();
     } else {
         displayDrug();
     }
 }
 
+
+// ========================================
+// 15. Study / Practice Modes
+// ========================================
+
 function setStudyMode() {
     currentMode = "study";
 
-    studyModeButton.classList.add("active");
-    practiceModeButton.classList.remove("active");
+    studyModeButton.classList.add(
+        "active"
+    );
 
-    practicePanel.style.display = "none";
+    practiceModeButton.classList.remove(
+        "active"
+    );
+
+    practicePanel.style.display =
+        "none";
 
     displayDrug();
 }
 
+
 function setPracticeMode() {
     currentMode = "practice";
 
-    practiceModeButton.classList.add("active");
-    studyModeButton.classList.remove("active");
+    practiceModeButton.classList.add(
+        "active"
+    );
 
-    practicePanel.style.display = "block";
+    studyModeButton.classList.remove(
+        "active"
+    );
+
+    practicePanel.style.display =
+        "block";
 
     displayPracticeQuestion();
 }
 
-flipButton.addEventListener("click", flipCard);
-flashcard.addEventListener("click", flipCard);
-nextButton.addEventListener("click", showNextCard);
-previousButton.addEventListener("click", showPreviousCard);
 
-studyModeButton.addEventListener("click", setStudyMode);
-practiceModeButton.addEventListener("click", setPracticeMode);
+// ========================================
+// 16. Event Listeners
+// ========================================
 
-checkAnswerButton.addEventListener("click", () => {
-    console.log("Check Answer clicked");
-    checkPracticeAnswer();
-});
-revealAnswerButton.addEventListener("click", revealPracticeAnswer);
+// Flashcard
+flipButton.addEventListener(
+    "click",
+    flipCard
+);
 
-tryAgainButton.addEventListener("click", tryPracticeAgain);
-nextQuestionButton.addEventListener("click", () => {
-    console.log("Next Question button clicked");
-    nextPracticeQuestion();
-});
+flashcard.addEventListener(
+    "click",
+    flipCard
+);
+
+
+// Navigation
+nextButton.addEventListener(
+    "click",
+    showNextCard
+);
+
+previousButton.addEventListener(
+    "click",
+    showPreviousCard
+);
+
+
+// Modes
+studyModeButton.addEventListener(
+    "click",
+    setStudyMode
+);
+
+practiceModeButton.addEventListener(
+    "click",
+    setPracticeMode
+);
+
+
+// Practice
+checkAnswerButton.addEventListener(
+    "click",
+    checkPracticeAnswer
+);
+
+revealAnswerButton.addEventListener(
+    "click",
+    revealPracticeAnswer
+);
+
+tryAgainButton.addEventListener(
+    "click",
+    tryPracticeAgain
+);
+
+nextQuestionButton.addEventListener(
+    "click",
+    nextPracticeQuestion
+);
+
+
+// ========================================
+// 17. Start Application
+// ========================================
 
 displayDrug();
