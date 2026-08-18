@@ -32,6 +32,12 @@ const flipButton = document.getElementById("flip-btn");
 const studyModeButton = document.getElementById("study-mode-btn");
 const practiceModeButton = document.getElementById("practice-mode-btn");
 
+const sessionAttemptsDisplay = document.getElementById("session-attempts");
+const sessionScoreDisplay = document.getElementById("session-score");
+const practiceNavigation = document.getElementById("practice-navigation");
+const tryAgainButton = document.getElementById("try-again-btn");
+const nextQuestionButton = document.getElementById("next-question-btn");
+
 function displayDrug() {
     const drug = drugs[currentCardIndex];
 
