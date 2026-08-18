@@ -313,6 +313,15 @@ function updateScoreDisplay() {
 }
 
 function nextPracticeQuestion() {
+    console.log("nextPracticeQuestion started");
+
+    console.log("Before recording:", {
+        currentCardIndex,
+        currentAttemptScore,
+        sessionAttempts,
+        sessionScore
+    });
+
     if (currentAttemptScore === null) {
         currentAttemptResult = "skipped";
         currentAttemptScore = 0;
@@ -320,13 +329,24 @@ function nextPracticeQuestion() {
 
     recordCurrentAttempt();
 
+    console.log("After recording:", {
+        currentCardIndex,
+        currentAttemptScore,
+        sessionAttempts,
+        sessionScore
+    });
+
     currentCardIndex++;
 
     if (currentCardIndex >= drugs.length) {
         currentCardIndex = 0;
     }
 
+    console.log("New card index:", currentCardIndex);
+
     displayPracticeQuestion();
+
+    console.log("Next question displayed");
 }
 
 function setAttemptResult(result, score, message) {
