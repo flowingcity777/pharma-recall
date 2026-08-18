@@ -79,6 +79,48 @@ function normalizeAnswer(answer) {
         .replace(/\s+/g, " ");
 }
 
+function calculateSimilarity(first, second) {
+    const longer = first.length >= second.length ? first : second;
+    const shorter = first.length >= second.length ? second : first;
+
+    if (longer.length === 0) {
+        return 1;
+    }
+
+    const distance = levenshteinDistance(longer, shorter);
+
+    return (longer.length - distance) / longer.length;
+}
+
+function levenshteinDistance(first, second) {
+    const matrix = [];
+
+    for (let i = 0; i <= second.length; i++) {
+        matrix[i] = [i];
+    }
+
+    for (let j = 0; j <= first.length; j++) {
+        matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= second.length; i++) {
+        for (let j = 1; j <= first.length; j++) {
+
+            if (second[i - 1] === first[j - 1]) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j - 1] + 1
+                );
+            }
+        }
+    }
+
+    return matrix[second.length][first.length];
+}
+
 function checkPracticeAnswer() {
     const drug = drugs[currentCardIndex];
 
@@ -91,21 +133,53 @@ function checkPracticeAnswer() {
         normalizeAnswer(effect)
     );
 
-    const matchedAnswers = userAnswers.filter(answer =>
-        correctAnswers.includes(answer)
-    );
+    let exactMatches = 0;
+    let almostMatches = 0;
 
-    if (matchedAnswers.length === correctAnswers.length) {
+    userAnswers.forEach(userAnswer => {
+
+        if (correctAnswers.includes(userAnswer)) {
+            exactMatches++;
+            return;
+        }
+
+        const isAlmost = correctAnswers.some(correctAnswer => {
+            const similarity = calculateSimilarity(
+                userAnswer,
+                correctAnswer
+            );
+
+            return similarity >= 0.85;
+        });
+
+        if (isAlmost) {
+            almostMatches++;
+        }
+    });
+
+    if (
+        exactMatches === correctAnswers.length &&
+        almostMatches === 0
+    ) {
         practiceFeedback.textContent = "Correct!";
-    } else if (matchedAnswers.length > 0) {
+
+    } else if (
+        exactMatches + almostMatches === correctAnswers.length
+    ) {
         practiceFeedback.textContent =
-            `Almost — you recalled ${matchedAnswers.length} of ${correctAnswers.length} key points.`;
+            "Almost — check your spelling.";
+
+    } else if (
+        exactMatches > 0 || almostMatches > 0
+    ) {
+        practiceFeedback.textContent =
+            `Partially correct — you recalled ${exactMatches + almostMatches} of ${correctAnswers.length} key points.`;
+
     } else {
         practiceFeedback.textContent =
             "Not quite. Try again or reveal the answer.";
     }
 }
-
 function revealPracticeAnswer() {
     const drug = drugs[currentCardIndex];
 
