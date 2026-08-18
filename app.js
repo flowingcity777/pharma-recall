@@ -149,6 +149,12 @@ function checkPracticeAnswer() {
                 correctAnswer
             );
 
+            console.log(
+                userAnswer,
+                correctAnswer,
+                similarity
+            );
+
             return similarity >= 0.78;
         });
 
