@@ -226,27 +226,39 @@ function checkPracticeAnswer() {
     });
 
     if (
-        exactMatches === correctAnswers.length &&
-        almostMatches === 0
-    ) {
-        practiceFeedback.textContent = "Correct!";
+    exactMatches === correctAnswers.length &&
+    almostMatches === 0
+) {
+    setAttemptResult(
+        "correct",
+        1,
+        "Correct!"
+    );
 
-    } else if (
-        exactMatches + almostMatches === correctAnswers.length
-    ) {
-        practiceFeedback.textContent =
-            "Almost — check your spelling.";
+} else if (
+    totalMatches === correctAnswers.length &&
+    almostMatches > 0
+) {
+    setAttemptResult(
+        "almost",
+        0.75,
+        "Almost — check your spelling."
+    );
 
-    } else if (
-        exactMatches > 0 || almostMatches > 0
-    ) {
-        practiceFeedback.textContent =
-            `Partially correct — you recalled ${exactMatches + almostMatches} of ${correctAnswers.length} key points.`;
+} else if (totalMatches > 0) {
+    setAttemptResult(
+        "partial",
+        0.5,
+        `Partially correct — you recalled ${totalMatches} of ${correctAnswers.length} key points.`
+    );
 
-    } else {
-        practiceFeedback.textContent =
-            "Not quite. Try again or reveal the answer.";
-    }
+} else {
+    setAttemptResult(
+        "incorrect",
+        0,
+        "Not quite. Try again or reveal the answer."
+    );
+}
 }
 
 function revealPracticeAnswer() {
@@ -254,6 +266,14 @@ function revealPracticeAnswer() {
 
     practiceFeedback.textContent =
         `Answer: ${drug.sideEffects.join(" • ")}`;
+}
+
+function setAttemptResult(result, score, message) {
+    currentAttemptResult = result;
+    currentAttemptScore = score;
+
+    practiceFeedback.textContent = message;
+    practiceNavigation.style.display = "flex";
 }
 
 function showNextCard() {
