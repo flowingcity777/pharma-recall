@@ -193,6 +193,8 @@ function levenshteinDistance(first, second) {
 }
 
 function checkPracticeAnswer() {
+    console.log("checkPracticeAnswer started");
+    
     const drug = drugs[currentCardIndex];
 
     const userAnswers = normalizeAnswer(practiceAnswer.value)
