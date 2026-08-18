@@ -2,6 +2,13 @@ let currentCardIndex = 0;
 let isCardFlipped = false;
 let currentMode = "study";
 
+let sessionAttempts = 0;
+let sessionScore = 0;
+
+let currentAttemptResult = null;
+let currentAttemptScore = null;
+let attemptRecorded = false;
+
 const drugName = document.getElementById("drug-name");
 const brandName = document.getElementById("brand-name");
 const sideEffects = document.getElementById("side-effects");
