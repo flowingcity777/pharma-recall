@@ -83,6 +83,12 @@ function displayPracticeQuestion() {
 
     practiceAnswer.value = "";
     practiceFeedback.textContent = "";
+
+    currentAttemptResult = null;
+    currentAttemptScore = null;
+    attemptRecorded = false;
+
+    practiceNavigation.style.display = "none";
 }
 
 function normalizeAnswer(answer) {
@@ -264,8 +270,63 @@ function checkPracticeAnswer() {
 function revealPracticeAnswer() {
     const drug = drugs[currentCardIndex];
 
-    practiceFeedback.textContent =
-        `Answer: ${drug.sideEffects.join(" • ")}`;
+    setAttemptResult(
+        "revealed",
+        0,
+        `Answer: ${drug.sideEffects.join(" • ")}`
+    );
+}
+
+function tryPracticeAgain() {
+    practiceAnswer.value = "";
+    practiceFeedback.textContent = "";
+
+    currentAttemptResult = null;
+    currentAttemptScore = null;
+
+    practiceNavigation.style.display = "none";
+
+    practiceAnswer.focus();
+}
+
+function recordCurrentAttempt() {
+    if (
+        attemptRecorded ||
+        currentAttemptScore === null
+    ) {
+        return;
+    }
+
+    sessionAttempts++;
+    sessionScore += currentAttemptScore;
+
+    attemptRecorded = true;
+
+    updateScoreDisplay();
+}
+
+function updateScoreDisplay() {
+    sessionAttemptsDisplay.textContent = sessionAttempts;
+
+    sessionScoreDisplay.textContent =
+        sessionScore.toFixed(2).replace(/\.00$/, "");
+}
+
+function nextPracticeQuestion() {
+    if (currentAttemptScore === null) {
+        currentAttemptResult = "skipped";
+        currentAttemptScore = 0;
+    }
+
+    recordCurrentAttempt();
+
+    currentCardIndex++;
+
+    if (currentCardIndex >= drugs.length) {
+        currentCardIndex = 0;
+    }
+
+    displayPracticeQuestion();
 }
 
 function setAttemptResult(result, score, message) {
@@ -336,5 +397,8 @@ practiceModeButton.addEventListener("click", setPracticeMode);
 
 checkAnswerButton.addEventListener("click", checkPracticeAnswer);
 revealAnswerButton.addEventListener("click", revealPracticeAnswer);
+
+tryAgainButton.addEventListener("click", tryPracticeAgain);
+nextQuestionButton.addEventListener("click", nextPracticeQuestion);
 
 displayDrug();
