@@ -121,6 +121,55 @@ function levenshteinDistance(first, second) {
     return matrix[second.length][first.length];
 }
 
+function normalizeAnswer(answer) {
+    return answer
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, " ");
+}
+
+function calculateSimilarity(first, second) {
+    const longer = first.length >= second.length ? first : second;
+    const shorter = first.length >= second.length ? second : first;
+
+    if (longer.length === 0) {
+        return 1;
+    }
+
+    const distance = levenshteinDistance(longer, shorter);
+
+    return (longer.length - distance) / longer.length;
+}
+
+function levenshteinDistance(first, second) {
+    const matrix = [];
+
+    for (let i = 0; i <= second.length; i++) {
+        matrix[i] = [i];
+    }
+
+    for (let j = 0; j <= first.length; j++) {
+        matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= second.length; i++) {
+        for (let j = 1; j <= first.length; j++) {
+
+            if (second[i - 1] === first[j - 1]) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j - 1] + 1
+                );
+            }
+        }
+    }
+
+    return matrix[second.length][first.length];
+}
+
 function checkPracticeAnswer() {
     const drug = drugs[currentCardIndex];
 
@@ -186,6 +235,7 @@ function checkPracticeAnswer() {
             "Not quite. Try again or reveal the answer.";
     }
 }
+
 function revealPracticeAnswer() {
     const drug = drugs[currentCardIndex];
 
