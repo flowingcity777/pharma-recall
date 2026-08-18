@@ -149,7 +149,7 @@ function checkPracticeAnswer() {
                 correctAnswer
             );
 
-            return similarity >= 0.85;
+            return similarity >= 0.78;
         });
 
         if (isAlmost) {
