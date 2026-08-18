@@ -420,7 +420,10 @@ previousButton.addEventListener("click", showPreviousCard);
 studyModeButton.addEventListener("click", setStudyMode);
 practiceModeButton.addEventListener("click", setPracticeMode);
 
-checkAnswerButton.addEventListener("click", checkPracticeAnswer);
+checkAnswerButton.addEventListener("click", () => {
+    console.log("Check Answer clicked");
+    checkPracticeAnswer();
+});
 revealAnswerButton.addEventListener("click", revealPracticeAnswer);
 
 tryAgainButton.addEventListener("click", tryPracticeAgain);
