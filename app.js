@@ -8,13 +8,27 @@
 // 1. Application State
 // ========================================
 
+// Study Mode
 let currentCardIndex = 0;
 let isCardFlipped = false;
 let currentMode = "study";
 
+// Practice Round
+let practiceQueue = [];
+let practiceQuestionIndex = 0;
+let practiceRoundActive = false;
+
+// Current round score
 let sessionAttempts = 0;
 let sessionScore = 0;
 
+// Round result counts
+let correctCount = 0;
+let almostCount = 0;
+let partialCount = 0;
+let reviewCount = 0;
+
+// Current question attempt
 let currentAttemptResult = null;
 let currentAttemptScore = null;
 let attemptRecorded = false;
