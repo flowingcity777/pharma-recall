@@ -572,8 +572,20 @@ function recordCurrentAttempt() {
     }
 
     sessionAttempts++;
-    sessionScore +=
-        currentAttemptScore;
+    sessionScore += currentAttemptScore;
+
+    if (currentAttemptResult === "correct") {
+        correctCount++;
+
+    } else if (currentAttemptResult === "almost") {
+        almostCount++;
+
+    } else if (currentAttemptResult === "partial") {
+        partialCount++;
+
+    } else {
+        reviewCount++;
+    }
 
     attemptRecorded = true;
 
@@ -598,29 +610,62 @@ function updateScoreDisplay() {
 
 function nextPracticeQuestion() {
 
-    // If user moves on without checking,
-    // count it as a skipped question.
-    if (
-        currentAttemptScore === null
-    ) {
-        currentAttemptResult =
-            "skipped";
-
+    if (currentAttemptScore === null) {
+        currentAttemptResult = "skipped";
         currentAttemptScore = 0;
     }
 
     recordCurrentAttempt();
 
-    currentCardIndex++;
+    const isLastQuestion =
+        practiceQuestionIndex ===
+        practiceQueue.length - 1;
 
-    if (
-        currentCardIndex >=
-        drugs.length
-    ) {
-        currentCardIndex = 0;
+    if (isLastQuestion) {
+        finishPracticeRound();
+        return;
     }
 
+    practiceQuestionIndex++;
+
     displayPracticeQuestion();
+}
+
+function finishPracticeRound() {
+    practiceRoundActive = false;
+
+    practicePanel.style.display = "none";
+    roundSummary.style.display = "block";
+
+    finalScoreDisplay.textContent =
+        `${sessionScore
+            .toFixed(2)
+            .replace(/\.00$/, "")} / ${practiceQueue.length}`;
+
+    const accuracy =
+        practiceQueue.length > 0
+            ? Math.round(
+                (sessionScore / practiceQueue.length) * 100
+            )
+            : 0;
+
+    finalAccuracyDisplay.textContent =
+        `${accuracy}%`;
+
+    correctCountDisplay.textContent =
+        correctCount;
+
+    almostCountDisplay.textContent =
+        almostCount;
+
+    partialCountDisplay.textContent =
+        partialCount;
+
+    reviewCountDisplay.textContent =
+        reviewCount;
+
+    cardCounter.textContent =
+        "Round Complete";
 }
 
 
