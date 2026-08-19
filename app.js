@@ -207,13 +207,14 @@ function flipCard() {
 // ========================================
 
 function displayPracticeQuestion() {
-    const drug = drugs[currentCardIndex];
+    const drug =
+        practiceQueue[practiceQuestionIndex];
 
     practiceDrugName.textContent =
         drug.genericName;
 
     cardCounter.textContent =
-        `Drug ${currentCardIndex + 1} of ${drugs.length}`;
+        `Question ${practiceQuestionIndex + 1} of ${practiceQueue.length}`;
 
     practiceAnswer.value = "";
     practiceFeedback.textContent = "";
@@ -223,6 +224,33 @@ function displayPracticeQuestion() {
     attemptRecorded = false;
 
     practiceNavigation.style.display = "none";
+}
+
+function startPracticeRound() {
+    practiceQueue = [...drugs];
+
+    practiceQuestionIndex = 0;
+
+    sessionAttempts = 0;
+    sessionScore = 0;
+
+    correctCount = 0;
+    almostCount = 0;
+    partialCount = 0;
+    reviewCount = 0;
+
+    currentAttemptResult = null;
+    currentAttemptScore = null;
+    attemptRecorded = false;
+
+    practiceRoundActive = true;
+
+    updateScoreDisplay();
+
+    roundSummary.style.display = "none";
+    practicePanel.style.display = "block";
+
+    displayPracticeQuestion();
 }
 
 
@@ -338,7 +366,8 @@ function setAttemptResult(
 // ========================================
 
 function checkPracticeAnswer() {
-    const drug = drugs[currentCardIndex];
+    const drug =
+    practiceQueue[practiceQuestionIndex];
 
     const userAnswers =
         practiceAnswer.value
@@ -501,7 +530,8 @@ function checkPracticeAnswer() {
 // ========================================
 
 function revealPracticeAnswer() {
-    const drug = drugs[currentCardIndex];
+    const drug =
+        practiceQueue[practiceQuestionIndex];
 
     setAttemptResult(
         "revealed",
