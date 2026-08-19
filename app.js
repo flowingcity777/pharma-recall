@@ -609,6 +609,7 @@ function setStudyMode() {
 
     practicePanel.style.display = "none";
 
+    flashcard.style.display = "";
     cardControls.style.display = "flex";
 
     displayDrug();
@@ -626,9 +627,10 @@ function setPracticeMode() {
         "active"
     );
 
-    practicePanel.style.display = "block";
-
+    flashcard.style.display = "none";
     cardControls.style.display = "none";
+
+    practicePanel.style.display = "block";
 
     displayPracticeQuestion();
 }
