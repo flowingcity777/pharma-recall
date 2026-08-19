@@ -118,6 +118,35 @@ const nextQuestionButton =
     document.getElementById("next-question-btn");
 
 
+// Round summary
+const roundSummary =
+    document.getElementById("round-summary");
+
+const finalScoreDisplay =
+    document.getElementById("final-score");
+
+const finalAccuracyDisplay =
+    document.getElementById("final-accuracy");
+
+const correctCountDisplay =
+    document.getElementById("correct-count");
+
+const almostCountDisplay =
+    document.getElementById("almost-count");
+
+const partialCountDisplay =
+    document.getElementById("partial-count");
+
+const reviewCountDisplay =
+    document.getElementById("review-count");
+
+const practiceAgainButton =
+    document.getElementById("practice-again-btn");
+
+const returnStudyButton =
+    document.getElementById("return-study-btn");
+
+
 // ========================================
 // 3. Study Mode Display
 // ========================================
