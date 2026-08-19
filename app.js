@@ -70,6 +70,9 @@ const nextButton =
 const flipButton =
     document.getElementById("flip-btn");
 
+const cardControls =
+    document.getElementById("card-controls");
+
 
 // Mode controls
 const studyModeButton =
@@ -604,8 +607,9 @@ function setStudyMode() {
         "active"
     );
 
-    practicePanel.style.display =
-        "none";
+    practicePanel.style.display = "none";
+
+    cardControls.style.display = "flex";
 
     displayDrug();
 }
@@ -622,8 +626,9 @@ function setPracticeMode() {
         "active"
     );
 
-    practicePanel.style.display =
-        "block";
+    practicePanel.style.display = "block";
+
+    cardControls.style.display = "none";
 
     displayPracticeQuestion();
 }
