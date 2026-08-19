@@ -39,6 +39,9 @@ const cardCounter =
 const flashcard =
     document.getElementById("flashcard");
 
+const flashcardContainer =
+    document.getElementById("flashcard-container");
+
 
 // Practice mode
 const practicePanel =
@@ -599,18 +602,16 @@ function showPreviousCard() {
 function setStudyMode() {
     currentMode = "study";
 
-    studyModeButton.classList.add(
-        "active"
-    );
-
-    practiceModeButton.classList.remove(
-        "active"
-    );
+    studyModeButton.classList.add("active");
+    practiceModeButton.classList.remove("active");
 
     practicePanel.style.display = "none";
 
-    flashcard.style.display = "";
-    cardControls.style.display = "flex";
+    flashcardContainer.style.display = "block";
+
+    previousButton.style.display = "";
+    nextButton.style.display = "";
+    flipButton.style.display = "";
 
     displayDrug();
 }
@@ -619,18 +620,16 @@ function setStudyMode() {
 function setPracticeMode() {
     currentMode = "practice";
 
-    practiceModeButton.classList.add(
-        "active"
-    );
+    practiceModeButton.classList.add("active");
+    studyModeButton.classList.remove("active");
 
-    studyModeButton.classList.remove(
-        "active"
-    );
-
-    flashcard.style.display = "none";
-    cardControls.style.display = "none";
+    flashcardContainer.style.display = "none";
 
     practicePanel.style.display = "block";
+
+    previousButton.style.display = "";
+    nextButton.style.display = "";
+    flipButton.style.display = "none";
 
     displayPracticeQuestion();
 }
