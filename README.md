@@ -13,9 +13,8 @@ Structured Drug Resources: Curated data tables and modular scripts (data/drugs.j
 Responsive Design: Clean, lightweight user interface built with vanilla web technologies for seamless studying across desktop and mobile devices.
 
 ### Tech Stack
-#### Frontend: HTML5, CSS3, JavaScript (Vanilla ES6+)
-
-#### Hosting: GitHub Pages
+* **Frontend:** HTML5, CSS3, JavaScript (Vanilla ES6+)
+* **Hosting:** GitHub Pages
 
 ### Project Structure
 pharma-recall/
